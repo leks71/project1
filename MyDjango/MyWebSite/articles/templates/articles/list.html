@@ -1,0 +1,29 @@
+{% extends 'articles/base.html' %}
+
+{% block title %}
+    Последние статьи
+{% endblock %}
+
+{% block content %}
+    <h3>Последние статьи</h3>
+    {% if latest_articles_list %}
+
+        {% for a in latest_articles_list %}
+            <a href="{% url 'articles:detail' a.id %}">{{ a.article_title }}</a><br>
+        {% endfor %}
+
+    {% else %}
+        Нет статей в данном блоге
+    {% endif %}
+
+
+        <form method="post">
+        {% csrf_token %}
+        {{ form.author_name }}<br>
+        {{ form.comment_text }}<br>
+        <button type="submit" class="btn btn-success">Добавить</button>
+        <span>{{ error }}</span>
+    </form>
+
+
+{% endblock %}

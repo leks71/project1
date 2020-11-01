@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ block.super }} :: {{ category.title }}
+{% endblock %}
+
+{% block titleh1 %}
+    {{ category.title }}
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+    {% for item in news %}
+        <div class="card mb-3">
+            <div class="card-header">
+                Категория: {{ item.category }}
+            </div>
+            <div class="card-body">
+                <div class="media">
+                    {% if item.photo %}
+                        <img src="{{ item.photo.url }}" alt="Фото" class="mr-4" width="65">
+                    {% else %}
+                        <img src="https://f0.pngfuel.com/png/776/328/lorem-ipsum-text-with-blue-background-png-clip-art-thumbnail.png"
+                             alt="Фото" class="mr-4" width="65">
+                    {% endif %}
+                    <div class="media-body">
+                        <h5 class="card-title">{{ item.title }}</h5>
+                        <p class="card-text">{{ item.content|linebreaks|truncatewords:50 }}</p>
+                        <a href="{{ item.get_absolute_url}}" class="btn btn-primary">Читать полностью...</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer text-muted">
+                {{ item.created_at|date:"d-m-Y H:i:s" }}<br>
+                Последнее изменение: {{ item.updated_at|date:"SHORT_DATETIME_FORMAT" }}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
